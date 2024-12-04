@@ -26,6 +26,9 @@ export class HomeComponent implements OnInit {
     {
       name: 'Cameras',
     },
+    {
+      name: 'Perfumes',
+    }
   ];
   loading = false;
   productPageCounter = 1;
@@ -53,7 +56,7 @@ export class HomeComponent implements OnInit {
       this.productService.getAllProducts(9, this.productPageCounter).subscribe(
         (res: any) => {
           console.log(res);
-          this.products = res;
+          this.products = res?.data?.products;
           this.loading = false;
         },
         (err) => {

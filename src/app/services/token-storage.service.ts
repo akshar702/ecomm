@@ -9,8 +9,9 @@ export class TokenStorageService {
 
   constructor() {}
 
-  public getToken(): string {
-    return sessionStorage.getItem(this.TOKEN_KEY);
+  public getToken(): Object {
+    const token = sessionStorage.getItem(this.TOKEN_KEY) 
+    return token ?  JSON.parse(sessionStorage.getItem(this.TOKEN_KEY)) : null;
   }
 
   setToken(token: string): void {
@@ -19,7 +20,8 @@ export class TokenStorageService {
   }
 
   getUser(): any {
-    return JSON.parse(sessionStorage.getItem(this.USER_KEY));
+    const user = sessionStorage.getItem(this.USER_KEY) 
+    return user ? JSON.parse(sessionStorage.getItem(this.USER_KEY)) : null;
   }
 
   setUser(user): void {

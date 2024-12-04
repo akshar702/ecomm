@@ -60,7 +60,14 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this._auth.logout();
+    this._auth.logout().subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );;
     this.isMenuOpen = false;
   }
 }

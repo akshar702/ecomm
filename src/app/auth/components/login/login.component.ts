@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  email = '';
+  username = '';
   password = '';
   error = '';
   loading = false;
@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.loading = true;
     this.error = '';
-    if (!this.email || !this.password) {
+    if (!this.username || !this.password) {
       this.error = 'Make sure to fill everything ;)';
     } else {
       this._auth
-        .login({ email: this.email, password: this.password })
+        .login({ username: this.username, password: this.password })
         .subscribe(
           (res) => {
             this.loading = false;
@@ -40,6 +40,6 @@ export class LoginComponent implements OnInit {
   }
 
   canSubmit(): boolean {
-    return this.email.length > 0 && this.password.length > 0;
+    return this.username.length > 0 && this.password.length > 0;
   }
 }

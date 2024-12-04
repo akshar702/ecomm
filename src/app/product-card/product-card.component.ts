@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-product-card',
@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ProductCardComponent implements OnInit {
   @Input() title: string;
-  @Input() image: string;
+  @Input() images: string;
   @Input() short_desc: string;
   @Input() category: string;
   @Input() quantity: number;
@@ -16,6 +16,15 @@ export class ProductCardComponent implements OnInit {
   @Input() onAdd: any;
 
   constructor() {}
+
+  public screenWidth: any;
+  public screenHeight: any;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.screenWidth = window.innerWidth;
+    this.screenHeight = window.innerHeight;
+  }
 
   ngOnInit(): void {}
 }
