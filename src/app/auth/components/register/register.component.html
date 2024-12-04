@@ -1,6 +1,6 @@
 <div class="register-container">
   <div class="form-container">
-    <h2>Sign Up to Eccom</h2>
+    <h2>Sign Up to Window Shopping</h2>
     <nz-alert
       *ngIf="errorMessage"
       nzShowIcon
@@ -10,7 +10,7 @@
     ></nz-alert>
     <form #registerForm="ngForm" (ngSubmit)="onSubmit()">
       <div class="input-container">
-        <label for="fullName">Full name</label>
+        <label for="fullName">Full Name</label>
         <input
           nz-input
           type="text"
@@ -20,7 +20,17 @@
         />
       </div>
       <div class="input-container">
-        <label for="email">Email address</label>
+        <label for="username">User Name</label>
+        <input
+          nz-input
+          type="text"
+          name="username"
+          [(ngModel)]="username"
+          placeholder="Enter your user name"
+        />
+      </div>
+      <div class="input-container">
+        <label for="email">Email Address</label>
         <input
           nz-input
           type="email"
@@ -58,7 +68,7 @@
         </div>
         <div class="checkbox-container">
           <input nz-input type="checkbox" />
-          <span> I agree to Eccom's Terms of Use & Privacy Policy</span>
+          <span> I agree to Window Shopping's Terms of Use & Privacy Policy</span>
         </div>
       </div>
       <div class="cta-container">

@@ -1,7 +1,15 @@
-<div class="product-card">
+<div class="product-card product">
   <div class="product-card__image" routerLink="/product/{{ id }}">
-    <img src="{{ image }}" alt="" />
-  </div>
+ <!-- Swiper Component -->
+ <swiper [zoom]="false"
+ [slidesPerView]="screenWidth > 1200 ? 3 : 1"
+ [spaceBetween]="50"
+ [pagination]="true"
+ [loop]="true">
+   <ng-template swiperSlide >
+     <img *ngFor="let img of images" [src]="img" alt="{{img}}" width="100%">
+   </ng-template>
+ </swiper>  </div>
   <div class="product-card__info">
     <header>
       <div class="title">
@@ -19,7 +27,7 @@
         onAdd({
           id: id,
           price: price,
-          image: image,
+          image: images,
           title: title,
           maxQuantity: quantity
         })
@@ -28,4 +36,3 @@
       {{ quantity === 0 ? "Out of stock" : "Add to cart" }}
     </button>
   </div>
-</div>

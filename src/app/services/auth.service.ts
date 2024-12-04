@@ -24,18 +24,19 @@ export class AuthService {
 
   login(credentials: any): Observable<any> {
     return this._api
-      .postTypeRequest('auth/login', {
-        email: credentials.email,
+      .postTypeRequest('users/login', {
+        username: credentials.username,
         password: credentials.password,
       })
       .pipe(
         map((res: any) => {
           let user = {
-            email: credentials.email,
-            token: res.token,
+            username: credentials.username,
+            accessToken: res?.data?.accessToken,
+            refreshToken: res?.data.refreshToken,
           };
-          this._token.setToken(res.token);
-          this._token.setUser(res.data[0]);
+          this._token.setToken(JSON.stringify({accessToken: res?.data?.accessToken, refreshToken: res?.data?.refreshToken}));
+          this._token.setUser(JSON.stringify(res?.data?.user));
           console.log(res);
           this.userSubject.next(user);
           return user;
@@ -44,15 +45,20 @@ export class AuthService {
   }
 
   register(user: any): Observable<any> {
-    return this._api.postTypeRequest('auth/register', {
+    return this._api.postTypeRequest('users/register', {
       fullName: user.fullName,
       email: user.email,
+      username: user.username,
       password: user.password,
     });
   }
 
-  logout() {
-    this._token.clearStorage();
-    this.userSubject.next(null);
+  logout(): Observable<any> {
+    return this._api.postTypeRequest('users/logout', null).pipe(
+      map((res: any) => {
+        this._token.clearStorage();
+        this.userSubject.next(null);
+      })
+    );
   }
 }

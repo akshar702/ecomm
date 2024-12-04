@@ -36,11 +36,9 @@
         *ngFor="let n of products"
         [id]="n.id"
         [title]="n.title"
-        [image]="n.image"
+        [images]="n.images"
         [price]="n.price"
-        [short_desc]="n.short_desc"
         [category]="n.category"
-        [quantity]="n.quantity"
         [onAdd]="cartService.addProduct.bind(cartService)"
       >
       </app-product-card>

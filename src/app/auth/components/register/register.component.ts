@@ -11,9 +11,10 @@ import { ApiService } from '../../../services/api.service';
 export class RegisterComponent implements OnInit {
   fullName = '';
   email = '';
+  username = '';
   password = '';
   confirmPassword = '';
-  errorMessage = '';
+  errorMessage;
   loading = false;
   constructor(
     private _api: ApiService,
@@ -24,8 +25,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
-    this.errorMessage = '';
-    if (this.fullName && this.password && this.email && this.confirmPassword) {
+    if (this.fullName && this.password && this.username && this.email && this.confirmPassword) {
       if (this.password !== this.confirmPassword) {
         this.errorMessage = 'Passwords need to match';
       } else {
@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
           .register({
             fullName: this.fullName,
             email: this.email,
+            username: this.username,
             password: this.password,
           })
           .subscribe(

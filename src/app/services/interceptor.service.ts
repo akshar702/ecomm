@@ -10,7 +10,7 @@ import {
 import { TokenStorageService } from '../services/token-storage.service';
 import { Observable } from 'rxjs';
 
-const TOKEN_HEADER_KEY = 'x-access-token';
+const TOKEN_HEADER_KEY = 'Authorization';
 
 @Injectable()
 export class MyInterceptor implements HttpInterceptor {
@@ -24,7 +24,7 @@ export class MyInterceptor implements HttpInterceptor {
     let token = this._token.getToken();
     if (token != null) {
       authReq = req.clone({
-        headers: req.headers.set(TOKEN_HEADER_KEY, token),
+        headers: req.headers.set(TOKEN_HEADER_KEY, `'Bearer ' ${token?.['accessToken']}`),
       });
     }
     return next.handle(authReq);
