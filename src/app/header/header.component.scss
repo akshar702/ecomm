@@ -226,3 +226,25 @@
   background-color: rgba(0, 0, 0, 0.5);
   pointer-events: auto;
 }
+
+
+::ng-deep asl-google-signin-button{
+  width: 236px;
+  margin: 10px 0px 8px;
+  height: 44px;
+  div{
+    height: 100% !important;
+    div{
+      height: 100% !important;
+      div{
+        height: 100% !important;
+      }
+    }
+  }
+  svg {
+    margin-left: 10px !important;
+    min-width: 21px !important;
+    width: 21px !important;
+    margin-top: 10px !important;
+}
+}

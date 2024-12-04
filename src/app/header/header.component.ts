@@ -4,6 +4,12 @@ import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { TokenStorageService } from '../services/token-storage.service';
 
+import {
+  SocialAuthService,
+  GoogleLoginProvider,
+  SocialUser,
+} from '@abacritt/angularx-social-login';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,6 +24,8 @@ export class HeaderComponent implements OnInit {
   dropdownVisible = false;
   cartData: any;
 
+  socialUser!: SocialUser;
+
   @HostListener('window:resize', ['$event'])
   getScreenSize(event?) {
     this.screenHeight = window.innerHeight;
@@ -30,7 +38,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private _token: TokenStorageService,
     private _auth: AuthService,
-    private _cart: CartService
+    private _cart: CartService,
+    private _router: Router,
+    private socialAuthService: SocialAuthService
   ) {
     this.getScreenSize();
     this._auth.user.subscribe((user) => {
@@ -45,6 +55,33 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     if (this._token.getUser()) this.isLoggedIn = true;
     else this.isLoggedIn = false;
+    this.socialAuthService.authState.subscribe((user) => {
+      if (user) {
+        const googleToken = user.idToken; // Get Google ID token
+        console.log(googleToken, 'googleToken');
+        this.verifyGoogleToken(googleToken);
+      }
+    });
+    
+  }
+
+  verifyGoogleToken(idToken: string): void{
+    this._auth
+    .loginwithgoogle({ token: idToken })
+    .subscribe({
+      next : (res) => {
+        console.log(res, 'res');
+        this._router.navigate(['/']);
+        this.toggleMenu();
+      },
+      error : (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  loginWithGoogle(): void {
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
   toggleMenu() {
@@ -60,14 +97,15 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this._auth.logout().subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );;
+      this._auth.logout().subscribe(
+        (res) => {
+          console.log(res);
+          this.socialAuthService.signOut();
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     this.isMenuOpen = false;
   }
 }

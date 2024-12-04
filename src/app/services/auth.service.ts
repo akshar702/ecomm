@@ -22,6 +22,23 @@ export class AuthService {
     return this.userSubject.value;
   }
 
+  loginwithgoogle(token: any): Observable<any> {
+    return this._api
+      .postTypeRequest('users/loginwithgoogle', token)
+      .pipe(
+        map((res: any) => {
+          let user = {
+            accessToken: res?.data?.accessToken,
+          };
+          this._token.setToken(JSON.stringify({accessToken: res?.data?.accessToken}));
+          this._token.setUser(JSON.stringify(res?.data?.accessToken));
+          console.log(res);
+          this.userSubject.next(user);
+          return user;
+        })
+      );
+  }
+
   login(credentials: any): Observable<any> {
     return this._api
       .postTypeRequest('users/login', {

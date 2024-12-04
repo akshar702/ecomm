@@ -32,7 +32,7 @@
       <nz-spin nzSimple [nzIndicator]="indicatorTemplate"> </nz-spin>
     </div>
     <div class="products__list" *ngIf="!loading">
-      <app-product-card
+      <!-- <app-product-card
         *ngFor="let n of products"
         [id]="n.id"
         [title]="n.title"
@@ -41,7 +41,7 @@
         [category]="n.category"
         [onAdd]="cartService.addProduct.bind(cartService)"
       >
-      </app-product-card>
+      </app-product-card> -->
     </div>
   </div>
   <div class="load-products">
