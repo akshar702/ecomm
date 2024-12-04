@@ -154,6 +154,17 @@
       </ul>
     </nav>
     <div class="🍑">
+
+      <asl-google-signin-button
+      nz-button
+      (signIn)="loginWithGoogle()"
+      [theme]="'outline'"
+      [type]="'standard'"
+      [size]="'large'"
+      [logo_alignment]="'left'"
+      >
+      </asl-google-signin-button> 
+
       <button
         nz-button
         routerLink="/login"
@@ -162,6 +173,7 @@
       >
         Sign in
       </button>
+
       <button
         nz-button
         routerLink="/register"

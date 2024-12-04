@@ -36,6 +36,12 @@ import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 
+import {  GoogleSigninButtonModule } from '@abacritt/angularx-social-login';
+import {
+  SocialLoginModule,
+  SocialAuthServiceConfig,
+} from '@abacritt/angularx-social-login';
+import { GoogleLoginProvider } from '@abacritt/angularx-social-login';
 registerLocaleData(en);
 
 @NgModule({
@@ -72,11 +78,25 @@ registerLocaleData(en);
     NzNotificationModule,
     NzProgressModule,
     NzTableModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule
   ],
   providers: [
     authInterceptorProviders,
     AuthGuardService,
     { provide: NZ_I18N, useValue: en_US },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider('741876862719-rjnqqcnj3a7gqg6tr3g5bfb2vi9uv8vh.apps.googleusercontent.com'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent],
 })

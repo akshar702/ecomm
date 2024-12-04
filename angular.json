@@ -57,6 +57,13 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "development": {
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "optimization": false
             }
           }
         },
@@ -68,6 +75,9 @@
           "configurations": {
             "production": {
               "browserTarget": "client:build:production"
+            },
+            "development": {
+              "browserTarget": "client:build:development"
             }
           }
         },
