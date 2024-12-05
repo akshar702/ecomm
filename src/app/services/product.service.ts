@@ -9,7 +9,7 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class ProductService {
-  private url = environment.apiUrl;
+  private url = environment['apiUrl'];
 
   constructor(private http: HttpClient, private _api: ApiService) {}
 
