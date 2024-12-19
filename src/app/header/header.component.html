@@ -20,6 +20,17 @@
   </div>
   <div class="header-container__right">
     <ng-container>
+      <button
+        nz-button
+        nz-dropdown
+        nzType="text"
+        nzTrigger="click"
+        nzPlacement="right"
+        nzShape="circle"
+        nzSize="large"
+        (click)="createPayment()"
+      > Make Payment
+      </button>
       <div class="cart-counter">{{ cartData.products.length }}</div>
       <button
         nz-button
