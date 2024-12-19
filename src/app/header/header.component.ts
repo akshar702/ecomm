@@ -3,6 +3,7 @@ import { HostListener } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { TokenStorageService } from '../services/token-storage.service';
+import { loadStripe } from '@stripe/stripe-js';
 
 import {
   SocialAuthService,
@@ -16,6 +17,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  stripePromise = loadStripe('YOUR_KEY');
+
   screenHeight: any;
   screenWidth: any;
   isMenuOpen = false;
@@ -107,5 +110,37 @@ export class HeaderComponent implements OnInit {
         }
       );
     this.isMenuOpen = false;
+  }
+
+
+  async createPayment() {
+
+
+    const stripe = await this.stripePromise;
+    const paymentData  = {
+      amount: 100, // $20.00
+      currency: 'usd',
+    };
+    // Request Checkout Session ID from backend
+    this._auth.createPayment(paymentData).subscribe(
+        {
+        next : async (response) => {
+         console.log(response, 'next');
+         let checkoutUrl =  response?.data?.checkoutUrl;
+          // Redirect to Stripe's Checkout page
+          //New Tab
+          window.open(checkoutUrl, '_blank'); // Opens in a new tab
+        // Same tab
+        //  const { error } = await stripe!.redirectToCheckout({ sessionId });
+        // if (error) {
+        //   console.error('Error redirecting to Stripe:', error);
+        // }
+        },
+        error : (err)  => {
+          console.log(err, 'err');
+        }
+      } 
+    );
+
   }
 }

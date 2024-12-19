@@ -78,4 +78,9 @@ export class AuthService {
       })
     );
   }
+
+  createPayment(data: any): Observable<any> {
+    return this._api.postTypeRequest('payments/create-payment', data);
+  }
+
 }
